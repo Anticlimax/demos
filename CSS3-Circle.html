@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    @keyframes box1Round {
+      0% {
+        transform: rotate(0);
+      }
+      50% {
+        transform: rotate(180deg)
+      }
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes innerBox1Round {
+      0% {
+        transform: rotate(0);
+      }
+      50% {
+        transform: rotate(-360deg)
+      }
+      100% {
+        transform: rotate(-720deg)
+      }
+    }
+
+    @keyframes box2Round {
+      0% {
+        transform: scale(1, 1)
+      }
+      50% {
+        transform: scale(.67, .67)
+      }
+      100% {
+        transform: scale(1, 1)
+      }
+    }
+
+    @keyframes innerBox2Round {
+      0% {
+        transform: scale(0, 0)
+      }
+      50% {
+        transform: scale(1.5, 1.5)
+      }
+      100% {
+        transform: scale(0, 0)
+      }
+    }
+
+    @keyframes box3-1Round {
+      0% {
+        transform: scale(0);
+        opacity: 0
+      }
+      50% {
+        transform: scale(0.7);
+        opacity: 1
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes box3-2Round {
+      0% {}
+      100% {
+        transform: scale(2);
+        border-color: transparent;
+      }
+    }
+
+    @keyframes box4Round {
+      0% {}
+      50% {
+        transform: rotate(180deg)
+      }
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes box5Round {
+      0% {
+        border-top: 35px solid transparent;
+        border-right: 35px solid transparent;
+        border-bottom: 35px solid transparent;
+        border-left: 35px solid transparent;
+      }
+      25% {
+        border-top: 35px solid black;
+        border-right: 35px solid transparent;
+        border-bottom: 35px solid transparent;
+        border-left: 35px solid transparent;
+      }
+      50% {
+        border-top: 35px solid black;
+        border-right: 35px solid black;
+        border-bottom: 35px solid transparent;
+        border-left: 35px solid transparent;
+      }
+      75% {
+        border-top: 35px solid black;
+        border-right: 35px solid black;
+        border-bottom: 35px solid black;
+        border-left: 35px solid transparent;
+      }
+      100% {
+        border-top: 35px solid black;
+        border-right: 35px solid black;
+        border-bottom: 35px solid black;
+        border-left: 35px solid black;
+      }
+    }
+
+    .box1 {
+      width: 150px;
+      height: 150px;
+      border-radius: 75px;
+      border-top: 5px solid black;
+      border-left: 5px solid black;
+      border-bottom: 5px solid transparent;
+      border-right: 5px solid transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: box1Round infinite linear .8s;
+    }
+
+    .innerBox1 {
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+      border-top: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-bottom: 5px solid black;
+      border-right: 5px solid black;
+      animation: innerBox1Round infinite linear .8s;
+    }
+
+    .box2 {
+      width: 150px;
+      height: 150px;
+      border-radius: 75px;
+      border: 3px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: box2Round infinite ease-out 1s;
+    }
+
+    .innerBox2 {
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+      border: 3px dashed black;
+      animation: innerBox2Round infinite ease-out 1s;
+    }
+
+    .box3 .innerBox3-1 {
+      width: 150px;
+      height: 150px;
+      border-radius: 75px;
+      border: 3px solid black;
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      animation: box3-1Round infinite linear 1s;
+    }
+
+    .box3 .innerBox3-2 {
+      margin-top: -150px;
+      width: 150px;
+      height: 150px;
+      border-radius: 75px;
+      border: 3px solid black;
+      opacity: 0;
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      animation: box3-1Round infinite 1s linear .5s;
+    }
+
+    .box4 {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 100px;
+      border: 3px solid black;
+      animation: box4Round infinite linear .8s;
+    }
+
+    .box4::after {
+      position: absolute;
+      content: '';
+      display: block;
+      top: 50%;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      border: 2px solid black;
+    }
+
+    .box5 {
+      width: 150px;
+      height: 150px;
+      border-radius: 150px;
+      position: relative;
+      animation: box5Round infinite linear alternate 1.5s;
+    }
+
+    .box5::after {
+      box-sizing: border-box;
+      position: absolute;
+      content: '';
+      top: calc(50% - 40px);
+      left: calc(50% - 40px);
+      display: block;
+      width: 80px;
+      height: 80px;
+      border: 5px solid black;
+      border-radius: 80px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box1">
+    <div class="innerBox1"></div>
+  </div>
+  <div class="box2">
+    <div class="innerBox2"></div>
+  </div>
+  <div class="box3">
+    <div class="innerBox3-1"></div>
+    <div class="innerBox3-2"></div>
+  </div>
+  <div class="box4"></div>
+  <div class="box5"></div>
+</body>
+
+</html>

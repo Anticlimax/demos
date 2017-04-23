@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tab</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    #app {
+      display: flex;
+      flex-direction: column;
+    }
+    .tabList {
+      display: flex;
+      width: 250px;
+      height:30px;
+    }
+    .item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      flex: auto;
+      color: pink;
+      border-radius: 5px;
+      border: 1px solid pink;
+    }
+    .content {
+      width: 600px;
+      height: 400px;
+      border: 1px solid pink;
+      border-radius: 5px;
+      color: pink;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    
+  </div>
+  <script>
+
+
+
+    function Tab(data) {
+      this.wrapper = data.wrapper
+      this.title = data.title
+      this.content = data.content
+      this.init()
+    }
+
+    Tab.prototype.init = function(){
+      this.create()
+      this.achieve()
+    }
+
+    Tab.prototype.create = function(){
+      var app = document.querySelector('#app')
+      var tabList = document.createElement('div')
+      var wrapper = document.createElement('div')
+      wrapper.className = this.wrapper
+      tabList.className = 'tabList'
+      app.appendChild(wrapper)
+      wrapper.appendChild(tabList)
+      this.title.forEach(function(item,index){
+        var a = document.createElement('div')
+        a.className = 'item'
+        a.innerHTML = item
+        tabList.appendChild(a)
+      })
+      var content = document.createElement('div')
+      content.className = 'content'
+      content.innerHTML = this.content[0]
+      wrapper.appendChild(content)
+    }
+
+    Tab.prototype.achieve = function(){
+      var that = this
+      var item = document.getElementsByClassName(that.wrapper)[0].querySelectorAll('.item')
+      var contentBox = document.getElementsByClassName(that.wrapper)[0].querySelector('.content')
+      item.forEach(function(e,index){
+        e.addEventListener('click',function(){
+          e.parentNode.childNodes.forEach(function(eve){
+            eve.style.backgroundColor = 'white'
+          })
+          e.style.backgroundColor = 'lightgray'
+          contentBox.innerHTML = (that.content)[index]
+        })
+      })
+    }
+    var data1 = {
+      wrapper:'wrapper',
+      title:['tab1','tab2','tab3'],
+      content:[
+        'content1',
+        'content2',
+        'content3'
+      ]
+    }
+        var data2 = {
+      wrapper:'wrapper1',
+      title:['tab1','tab2','tab3'],
+      content:[
+        'content1',
+        'content2',
+        'content3'
+      ]
+    }
+    var a = new Tab(data1)
+    var b = new Tab(data2)
+  </script>
+
+</body>
+</html>

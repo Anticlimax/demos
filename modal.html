@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #app button {
+      border: none;
+      padding: 10px 15px;
+      background-color: lightblue;
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    #app button:hover {
+      background-color: darkcyan;
+    }
+    
+    #modal {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: black;
+      opacity: 0.2;
+      display: none;
+    }
+    
+    #panel {
+      width: 400px;
+      height: 200px;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      margin-left: -200px;
+      margin-top: -100px;
+      background-color: white;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 10px 0 10px;
+      display: none;
+      z-index: 10;
+    }
+    
+    #panel .header {
+      display: flex;
+      justify-content: space-between;
+      height: 25px;
+      border-bottom: 1px solid lightgray;
+      color: gray;
+    }
+    
+    #panel .close {
+      cursor: pointer;
+    }
+    
+    #panel .main {
+      height: 130px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid lightgray;
+    }
+    
+    .footer {
+      flex: auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    
+    .btn1,
+    .btn2 {
+      text-decoration: none;
+      color: white;
+      padding: 5px 10px;
+    }
+    
+    .btn1 {
+      background-color: #0593d3
+    }
+    
+    .btn2 {
+      background-color: #c7171e;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="modal"></div>
+    <div id="panel">
+      <div class="header">
+        <span>您确定要关闭吗</span><span class='close'>X</span>
+      </div>
+      <div class="main">这里是内容</div>
+      <div class="footer">
+        <a href="#" class="btn1">确定</a>
+        <a href="#" class="btn2">取消</a>
+      </div>
+    </div>
+    <button id="open">点击</button>
+  </div>
+
+
+  <script>
+    var app = (function () {
+      function Modal(app) {
+        this.app = document.querySelector(app)
+        this.init();
+        this.bind();
+      }
+
+      Modal.prototype.init = function () {
+        this.open = this.app.querySelector('#open')
+        this.panel = this.app.querySelector('#panel')
+        this.modal = this.app.querySelector('#modal')
+        this.close = this.app.querySelector('.close')
+        this.btn1 = this.app.querySelector('.btn1')
+        this.btn2 = this.app.querySelector('.btn2')
+      }
+
+      Modal.prototype.bind = function () {
+        var that = this
+        this.open.addEventListener('click', showModal)
+        this.modal.addEventListener('click', hideModal)
+        this.close.addEventListener('click', hideModal)
+        this.btn1.addEventListener('click', hideModal)
+
+        function showModal(e) {
+          e.preventDefault()
+          that.modal.style.display = 'block'
+          that.panel.style.display = 'flex'
+        }
+
+        function hideModal(e) {
+          e.preventDefault()
+          that.modal.style.display = 'none'
+          that.panel.style.display = 'none'
+        }
+      }
+
+
+      return {
+        init: function (app) {
+          new Modal(app)
+        }
+      }
+    })()
+
+    app.init('#app')
+  </script>
+</body>
+
+</html>

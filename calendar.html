@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html,body,div,span,ul,li,table,
+    tbody,thead,tfoot,tr,th {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    html, body {
+      font-family: '微软雅黑'
+    }
+    ul,li {
+      list-style: none;
+    }
+    #calendar-table {
+      width: 300px;
+      border: 1px solid lightblue;
+      box-shadow: 1px 1px 1px 1px lightblue;
+      display: none;
+      position: absolute;
+    }
+    thead {
+      display: flex;
+      flex-direction: column;
+      width:300px;
+      margin-left: -2px;
+      padding: 10px 0;
+    }
+    .theadHead {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 10px;
+    }
+    .pre, .next {
+      color: #c7171e;
+      cursor: pointer;
+    }
+    .weekRow {
+      display: flex;
+      width: 300px;
+      justify-content: space-around;
+      color:#c7171e;
+    }
+    tbody {
+      padding-top: 20px;
+    }
+    .datePanel {
+      height:300px;
+      position: relative;
+    }
+    tbody li {
+      cursor: pointer;
+      height: 50px;
+      width:42px;
+      position: absolute;
+      transition: all 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    tbody li:hover {
+      background-color: lightblue;
+    }
+    .tfootFoot {
+      height: 50px;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .tfootFoot .today,
+    .tfootFoot .close {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <input id="dateInput" type="text">
+  <table id="calendar-table">
+    <thead>
+      <tr class="theadHead">
+        <th class="pre"><</th>
+        <th class="yearAndMonth"></th>
+        <th class="next">></th>
+      </tr>
+      <tr class="week">
+        <th>
+          <ul class="weekRow">
+            <li>日</li>
+            <li>一</li>
+            <li>二</li>
+            <li>三</li>
+            <li>四</li>
+            <li>五</li>
+            <li>六</li>
+          </ul>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>
+          <ul class="datePanel">
+
+          </ul>
+        </th>
+
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="tfootFoot">
+        <th class="today">今天</th>
+        <th class="close">关闭</th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <script>
+    var dayOfToday = new Date()
+    var data = {
+      year: dayOfToday.getFullYear(),
+      month: dayOfToday.getMonth() ,
+      day: dayOfToday.getDate()
+    }
+
+    function init(){
+      var datePanel = document.querySelector('.datePanel')
+      var str = ''
+      showYearAndMonth()
+      for(var i = 0; i < 6; i++){
+        for(var j = 0; j < 7; j++){
+          var li = document.createElement('li')
+          li.className = 'cube' + i + j
+          datePanel.appendChild(li)
+          posLi(li,i,j)
+        }
+      }
+      bind()
+      render()
+    }
+
+    function showYearAndMonth(){
+      var yearAndMonth = document.querySelector('.yearAndMonth')
+      yearAndMonth.innerHTML = data.year + '年' + (data.month + 1) + '月' 
+    }
+
+    function posLi(li,i,j){
+      li.style.left = j * 42 + 'px'
+      li.style.top = i * 50 + 'px'
+    }
+
+    function render(){
+      var days = calculateDays(data.year, data.month)
+      var d = new Date(data.year,data.month,1)
+      var week = d.getDay()
+      var li = document.querySelector('.datePanel').querySelectorAll('li')
+      for(var i = 0; i < 42; i++){
+        li[i].innerHTML = ''
+      }
+      for(var i = 0; i < days; i ++){
+        li[i + week].innerHTML = i + 1
+      }
+    }
+
+    function isLeapYear(year){
+      return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)
+    }
+
+    function calculateDays(year, month){
+      var months = [31,28,31,30,31,30,31,31,30,31,30,31]
+      var days = months[month]
+      if( month === 1 && isLeapYear(year)){
+        days = 29
+      }
+      return days
+    }
+
+    function bind(){
+      var dateInput = document.querySelector('#dateInput')
+      var preBtn = document.querySelector('.pre')
+      var nextBtn = document.querySelector('.next')
+      var today = document.querySelector('.today')
+      var close = document.querySelector('.close')
+      var panel = document.querySelector('.datePanel')
+      var li = panel.querySelectorAll('li')
+
+      nextBtn.addEventListener('click',next)
+      preBtn.addEventListener('click',pre)
+      today.addEventListener('click',showToday)
+      panel.addEventListener('click',function(e){
+        addDate(e)
+        if(e.target.innerHTML && !isNaN(e.target.innerHTML.toString())){
+          hideCalendar()
+        }
+      })
+      dateInput.addEventListener('focus',showCalendar)
+      dateInput.addEventListener('blur',function(){
+        setTimeout(hideCalendar,200)
+      })
+      close.addEventListener('click',hideCalendar)
+    }
+
+    
+    function pre(){
+      if(data.month > 0){
+        data.month -= 1
+        showYearAndMonth()
+      } else {
+        data.month = 11
+        data.year -= 1
+        showYearAndMonth()
+      }
+      render()
+    }
+
+    function next(){
+      if(data.month < 11){
+        data.month += 1
+        showYearAndMonth()
+      } else {
+        data.month = 0
+        data.year += 1
+        showYearAndMonth()
+      }
+      render()
+    }
+
+    function showToday(){
+      var today = new Date()
+      var dateInput = document.querySelector('#dateInput')
+      data.year = today.getFullYear()
+      data.month = today.getMonth()
+      data.day = today.getDate()
+      showYearAndMonth()
+      dateInput.value = data.year + '/' + (data.month + 1) + '/' + data.day
+      render()
+      hideCalendar()
+    }
+
+    function addDate(e){
+      var dateInput = document.querySelector('#dateInput')
+      var date = data.year + '/' + (data.month + 1) + '/' + e.target.innerHTML
+      if(e.target.innerHTML !== ''){
+        dateInput.value = date
+      }
+    }
+
+    function showCalendar(){
+      var calendar = document.querySelector('#calendar-table')
+      var dateInput = document.querySelector('#dateInput')
+      var left = dateInput.getBoundingClientRect().left + document.body.scrollLeft
+      var top = dateInput.getBoundingClientRect().top + dateInput.getBoundingClientRect().height + document.body.scrollTop
+      calendar.style.display = 'table'
+      calendar.style.left = left + 'px'
+      calendar.style.top = top + 'px'
+    }
+
+    function hideCalendar(){
+      var calendar = document.querySelector('#calendar-table')
+      calendar.style.display = 'none'
+    }
+    init()
+  </script>
+</body>
+
+</html>

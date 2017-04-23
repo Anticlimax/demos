@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body,
+    html {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style: none
+    }
+
+    #app {
+      width: 900px;
+      margin: 0 auto;
+    }
+
+    #app ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .imgWrapper {
+      margin: 10px;
+      flex: auto;
+    }
+
+    .imgWrapper img {
+      width: 200px;
+      height: 300px;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <ul>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+      <li class="imgWrapper">
+        <img data-src="http://img.7139.com/file/201207/04/299ac0ab2be96c216c6bd5255945cb6c.jpg">
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    var exposure = (function () {
+      function Exposure(app) {
+        this.app = document.querySelector(app)
+        this.img = this.app.querySelectorAll('img')
+        this.init()
+        this.bind()
+      }
+
+      Exposure.prototype.init = function () {
+        this.showImg()
+      }
+
+      Exposure.prototype.bind = function () {
+        var that = this
+        window.addEventListener('scroll', function () {
+          that.showImg()
+
+        })
+      }
+
+      Exposure.prototype.showImg = function () {
+        var that = this
+        for (var i = 0; i < this.img.length; i++) {
+          if (this.isShow(this.img[i])) {
+            this.img[i].setAttribute('src', this.img[i].getAttribute('data-src'))
+
+          }
+        }
+      }
+
+      Exposure.prototype.isShow = function (e) {
+        var scrollTop = document.body.scrollTop
+        eInfo = e.getBoundingClientRect(),
+          eTop = eInfo.top + scrollTop,
+          wTop = window.innerHeight + scrollTop
+
+        if (eTop < wTop) {
+          return true
+        } else {
+          return false
+        }
+      }
+
+      return {
+        init: function (app) {
+          new Exposure(app)
+        }
+      }
+    })()
+
+
+    exposure.init('#app')
+  </script>
+</body>
+
+</html>
